@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Connections</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            <div id="leaderboard-list">
+                {% for score in leaderboard %}
+                <div class="score-entry">
+                    <span class="player-name">{{ score.name }}</span>
+                    <span class="player-time">{{ score.time }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="main-content">
+            <header>
+                <h1>Anime Connections</h1>
+            </header>
+            <div class="game-header">
+                <div class="mistakes">Mistakes remaining: <span id="mistakes">4</span></div>
+                <div class="timer">Time: <span id="timer">4:00</span></div>
+            </div>
+            <div id="grid" class="grid"></div>
+            <div class="controls">
+                <button id="submit" class="submit-btn">Submit</button>
+                <button id="deselect" class="deselect-btn">Deselect All</button>
+                <button id="new-game" class="new-game-btn">New Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Notification -->
+    <div id="success-notification" class="notification">
+      <div class="notification-content">
+          <div class="checkmark">✓</div>
+          <div class="success-message">
+              <h3>Correct!</h3>
+              <p>Category: <span id="category-name"></span></p>
+          </div>
+      </div>
+    </div>
+
+    <!-- Score Modal -->
+    <div id="score-modal" class="modal">
+        <div class="modal-content">
+            <h2>Congratulations!</h2>
+            <p>You completed the game in <span id="final-time"></span>!</p>
+            <div class="score-input">
+                <label for="player-name">Enter your name:</label>
+                <input type="text" id="player-name" maxlength="20">
+                <button id="submit-score">Submit Score</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
