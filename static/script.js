@@ -1,26 +1,82 @@
-// Game data
-const groups = [
-  {
-    category: "Protagonists",
-    words: ["NARUTO", "LUFFY", "GOKU", "ICHIGO"],
-    difficulty: 1
+// Game data for different difficulty levels
+const difficultyLevels = {
+  easy: {
+    time: 90, // 1:30 minutes
+    groups: [
+      {
+        category: "Protagonists",
+        words: ["NARUTO", "LUFFY", "GOKU", "ICHIGO"],
+        difficulty: 1
+      },
+      {
+        category: "Studios",
+        words: ["MAPPA", "BONES", "UFOTABLE", "MADHOUSE"],
+        difficulty: 2
+      },
+      {
+        category: "Genres",
+        words: ["SHOUNEN", "MECHA", "ISEKAI", "SLICE"],
+        difficulty: 3
+      },
+      {
+        category: "Anime Terms",
+        words: ["KAWAII", "SENPAI", "OTAKU", "WAIFU"],
+        difficulty: 4
+      }
+    ]
   },
-  {
-    category: "Studios",
-    words: ["MAPPA", "BONES", "UFOTABLE", "MADHOUSE"],
-    difficulty: 2
+  medium: {
+    time: 180, // 3:00 minutes
+    groups: [
+      {
+        category: "Sports Equipment",
+        words: ["RACKET", "HELMET", "GLOVES", "BOOTS"],
+        difficulty: 1
+      },
+      {
+        category: "Musical Instruments",
+        words: ["PIANO", "DRUMS", "FLUTE", "GUITAR"],
+        difficulty: 2
+      },
+      {
+        category: "Countries",
+        words: ["FRANCE", "SPAIN", "ITALY", "GREECE"],
+        difficulty: 3
+      },
+      {
+        category: "Occupations",
+        words: ["DOCTOR", "CHEF", "PILOT", "ARTIST"],
+        difficulty: 4
+      }
+    ]
   },
-  {
-    category: "Genres",
-    words: ["SHOUNEN", "MECHA", "ISEKAI", "SLICE"],
-    difficulty: 3
-  },
-  {
-    category: "Anime Terms",
-    words: ["KAWAII", "SENPAI", "OTAKU", "WAIFU"],
-    difficulty: 4
+  hard: {
+    time: 480, // 8:00 minutes
+    groups: [
+      {
+        category: "Scientific Terms",
+        words: ["QUANTUM", "NUCLEUS", "PHOTON", "NEUTRON"],
+        difficulty: 1
+      },
+      {
+        category: "Philosophy",
+        words: ["ETHICS", "LOGIC", "WISDOM", "REASON"],
+        difficulty: 2
+      },
+      {
+        category: "Architecture",
+        words: ["GOTHIC", "DORIC", "MODERN", "BAROQUE"],
+        difficulty: 3
+      },
+      {
+        category: "Literature",
+        words: ["PROSE", "VERSE", "SATIRE", "SONNET"],
+        difficulty: 4
+      }
+    ]
   }
-];
+};
+
 
 // Utility functions
 function shuffleArray(array) {
@@ -38,7 +94,7 @@ function formatTime(seconds) {
   return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
-function showNotification(type, category = '') {
+function showNotification(type, category = '', difficulty = '') {
   // Remove any existing notifications
   const existingNotification = document.querySelector('.game-notification');
   if (existingNotification) {
@@ -46,7 +102,7 @@ function showNotification(type, category = '') {
   }
 
   const notification = document.createElement('div');
-  notification.className = `game-notification ${type}`;
+  notification.className = `game-notification ${type} ${difficulty}`;
   
   const icon = type === 'correct' ? '✓' : '✕';
   const title = type === 'correct' ? 'Correct!' : 'Wrong!';
@@ -76,8 +132,8 @@ function showNotification(type, category = '') {
   }, 100);
 }
 
-function initGame() {
-  game.initialize(updateUI);
+function initGame(difficulty) {
+  game.initialize(updateUI, difficulty);
 }
 
 // Game class
@@ -90,14 +146,32 @@ class Game {
     this.timeLeft = 240;
     this.timer = null;
     this.onUpdate = null;
+    this.currentDifficulty = 'easy';
   }
 
-  initialize(onUpdate) {
+  initialize(onUpdate,difficulty = 'easy') {
+    // Check if difficulty is an event object
+    if (difficulty && typeof difficulty === 'object') {
+      // Try multiple ways to extract difficulty
+      difficulty = difficulty.target?.dataset?.difficulty 
+                || difficulty.currentTarget?.dataset?.difficulty
+                || difficulty.difficulty 
+                || 'easy';
+    }
+
+    // Rest of your initialization method
+    if (!difficultyLevels[difficulty]) {
+      console.error(`Invalid difficulty level: ${difficulty}`);
+      difficulty = 'easy';
+    }
+
+    this.currentDifficulty = difficulty;
     // Clear previous game state
     this.selectedWords.clear();
     this.solvedGroups.clear();
     this.mistakes = 4;
-    this.timeLeft = 240;
+    this.timeLeft = difficultyLevels[difficulty]?.time
+
     if (this.timer) {
       clearInterval(this.timer);
     }
@@ -109,8 +183,14 @@ class Game {
   }
 
   shuffleWords() {
-    const allWords = groups.flatMap(group => group.words);
+    const allWords = difficultyLevels[this.currentDifficulty].groups.flatMap(group => group.words);
     return shuffleArray(allWords);
+  }
+
+  findGroupForWord(word) {
+    return difficultyLevels[this.currentDifficulty].groups.findIndex(group => 
+      group.words.includes(word)
+    );
   }
 
   toggleWord(word) {
@@ -124,10 +204,6 @@ class Game {
     this.update();
   }
 
-  findGroupForWord(word) {
-    return groups.findIndex(group => group.words.includes(word));
-  }
-
   submitGuess() {
     if (this.selectedWords.size !== 4) return;
 
@@ -138,15 +214,15 @@ class Game {
     );
 
     if (isCorrect) {
-      showNotification('correct', groups[groupIndex].category);
       this.solvedGroups.add(groupIndex);
       this.selectedWords.clear();
-      if (this.solvedGroups.size === groups.length) {
+      if (this.solvedGroups.size === difficultyLevels[this.currentDifficulty].groups.length) {
         this.endGame(true);
       }
+      showNotification('correct', difficultyLevels[this.currentDifficulty].groups[groupIndex].category);
     } else {
-      showNotification('wrong');
       this.mistakes--;
+      showNotification('wrong');
       if (this.mistakes === 0) {
         this.endGame(false);
       }
@@ -172,7 +248,8 @@ class Game {
   endGame(won) {
       clearInterval(this.timer);
       if (won) {
-          const timeSpent = 240 - this.timeLeft;
+          const timeSpent = difficultyLevels[this.currentDifficulty].time - this.timeLeft;
+          
           const modal = document.getElementById('score-modal');
           const finalTime = document.getElementById('final-time');
           finalTime.textContent = formatTime(timeSpent);
@@ -249,9 +326,14 @@ function updateUI(gameState) {
 // Event listeners
 document.getElementById('submit').addEventListener('click', () => game.submitGuess());
 document.getElementById('deselect').addEventListener('click', () => game.deselectAll());
-document.getElementById('new-game').addEventListener('click', () => initGame());
+document.getElementById('new-game').addEventListener('click', () => initGame('easy'));
+document.getElementById('easy-game').addEventListener('click', () => initGame('easy'));
+document.getElementById('medium-game').addEventListener('click', () => initGame('medium'));
+document.getElementById('hard-game').addEventListener('click', () => initGame('hard'));
 
-
+function initGame(difficulty) {
+  game.initialize(updateUI, difficulty);
+}
 
 // Start the game when the page loads
 document.addEventListener('DOMContentLoaded', initGame);
