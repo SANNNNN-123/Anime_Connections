@@ -38,26 +38,47 @@ function formatTime(seconds) {
   return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
-function showSuccessNotification(category) {
-  const notification = document.getElementById('success-notification');
-  const categorySpan = document.getElementById('category-name');
+function showNotification(type, category = '') {
+  // Remove any existing notifications
+  const existingNotification = document.querySelector('.game-notification');
+  if (existingNotification) {
+    existingNotification.remove();
+  }
+
+  const notification = document.createElement('div');
+  notification.className = `game-notification ${type}`;
   
-  categorySpan.textContent = category;
-  notification.style.display = 'block';
+  const icon = type === 'correct' ? '✓' : '✕';
+  const title = type === 'correct' ? 'Correct!' : 'Wrong!';
+  const message = type === 'correct' ? `Category: ${category}` : 'Try again';
   
-  // Remove any existing animation classes
-  notification.classList.remove('slide-out');
+  notification.innerHTML = `
+    <div class="notification-content">
+      <div class="notification-icon">${icon}</div>
+      <div class="notification-message">
+        <h3>${title}</h3>
+        <p>${message}</p>
+      </div>
+    </div>
+  `;
   
-  // Automatically hide after 3 seconds
+  document.body.appendChild(notification);
+  
+  // Trigger animation
   setTimeout(() => {
-      notification.style.animation = 'slideOut 0.3s ease-out forwards';
+    notification.classList.add('show');
+    setTimeout(() => {
+      notification.classList.remove('show');
       setTimeout(() => {
-          notification.style.display = 'none';
-          notification.style.animation = '';
+        notification.remove();
       }, 300);
-  }, 3000);
+    }, 2000);
+  }, 100);
 }
 
+function initGame() {
+  game.initialize(updateUI);
+}
 
 // Game class
 class Game {
@@ -72,6 +93,15 @@ class Game {
   }
 
   initialize(onUpdate) {
+    // Clear previous game state
+    this.selectedWords.clear();
+    this.solvedGroups.clear();
+    this.mistakes = 4;
+    this.timeLeft = 240;
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+    
     this.onUpdate = onUpdate;
     this.words = this.shuffleWords();
     this.startTimer();
@@ -95,9 +125,7 @@ class Game {
   }
 
   findGroupForWord(word) {
-    return groups.findIndex(group => 
-      group.words.includes(word)
-    );
+    return groups.findIndex(group => group.words.includes(word));
   }
 
   submitGuess() {
@@ -110,12 +138,14 @@ class Game {
     );
 
     if (isCorrect) {
+      showNotification('correct', groups[groupIndex].category);
       this.solvedGroups.add(groupIndex);
       this.selectedWords.clear();
       if (this.solvedGroups.size === groups.length) {
         this.endGame(true);
       }
     } else {
+      showNotification('wrong');
       this.mistakes--;
       if (this.mistakes === 0) {
         this.endGame(false);
@@ -193,8 +223,6 @@ class Game {
   }
 }
 
-
-
 // Game initialization and UI updates
 const game = new Game();
 
@@ -223,9 +251,7 @@ document.getElementById('submit').addEventListener('click', () => game.submitGue
 document.getElementById('deselect').addEventListener('click', () => game.deselectAll());
 document.getElementById('new-game').addEventListener('click', () => initGame());
 
-function initGame() {
-  game.initialize(updateUI);
-}
+
 
 // Start the game when the page loads
 document.addEventListener('DOMContentLoaded', initGame);
