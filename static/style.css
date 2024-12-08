@@ -1,10 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
+
 :root {
-  --color-background: #1a1a2e;
-  --color-text: #ffffff;
+  --color-background: #eee;
+  --color-surface: #ffffff;
+  --color-text: #333333;
+  --color-text-secondary: #666666;
   --color-primary: #4a90e2;
   --color-secondary: #e6e6e6;
-  --color-error: #ff6b6b;
   --color-success: #51cf66;
+  --color-error: #ff6b6b;
+  --color-gold: #ffd700;
+  --color-silver: #c0c0c0;
+  --color-bronze: #cd7f32;
 }
 
 * {
@@ -14,7 +22,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Neucha", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background-color: var(--color-background);
   color: var(--color-text);
   min-height: 100vh;
@@ -31,27 +39,45 @@ body {
 }
 
 .leaderboard {
-  width: 300px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1rem;
-  border-radius: 8px;
-  height: fit-content;
+  background: var(--color-surface);
+  padding: 1.5rem;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 25px 25px 55px 5px / 5px 55px 25px 25px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .leaderboard h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-  color: var(--color-primary);
+  font-family: 'Cabin Sketch', cursive;
+  text-align: left;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+  font-size: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-primary);
 }
 
 .score-entry {
   display: flex;
   justify-content: space-between;
-  padding: 0.1rem;
+  padding: 0.15rem;
+  background: var(--color-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.score-entry:nth-child(even) {
+  background: var(--color-surface);
 }
 
 .main-content {
   flex: 1;
+  background: var(--color-surface);
+  padding: 2rem;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 25px 25px 55px 5px / 5px 55px 25px 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header {
@@ -59,11 +85,23 @@ header {
   margin-bottom: 2rem;
 }
 
+header h1 {
+  font-family: 'Cabin Sketch', cursive;
+  font-size: 2.5rem;
+  color: var(--color-text);
+  font-weight: bold;
+}
+
 .game-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f0f0f0;
+  border-radius: 8px;
+  font-family: 'Neucha', cursive;
+  border-radius: 8px;
 }
 
 .grid {
@@ -74,14 +112,17 @@ header {
 }
 
 .word-tile {
-  background-color: var(--color-secondary);
-  color: #000;
+  font-family: 'Neucha', cursive;
+  background-color: #f0f0f0;
+  color: #333;
   padding: 1rem;
+  border: 2px solid #d3d3d3;
   border-radius: 8px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: bold;
+  
 }
 
 .word-tile.selected {
@@ -105,64 +146,48 @@ header {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: 1rem;
-}
-
-button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.submit-btn {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.submit-btn:hover {
-  background-color: #357abd;
-}
-
-.deselect-btn {
-  background-color: var(--color-secondary);
-  color: #000;
-}
-
-.deselect-btn:hover {
-  background-color: #d1d1d1;
-}
-
-.new-game-btn {
-  background-color: var(--color-success);
-  color: white;
-}
-
-.new-game-btn:hover {
-  background-color: #40a953;
+  margin-top: 0.9rem;
+  width: 100%;
 }
 
 .difficulty-btn {
   flex: 1;
   padding: 0.75rem;
   font-size: 0.9rem;
-}
-
-.difficulty-btn.easy {
-  background-color: #4CAF50;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  border-radius: 555px 25px 15px 25px / 25px 5px 35px 555px;
   color: white;
 }
 
-.difficulty-btn.medium {
-  background-color: #2196F3;
-  color: white;
+
+button {
+  font-family: 'Neucha', cursive;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  background: #a9a9a9;
+  color: #333;
 }
 
-.difficulty-btn.hard {
-  background-color: #f44336;
-  color: white;
+button:hover {
+  opacity: 1;
+}
+
+.submit-btn {
+  background-color: var(--color-primary);
+}
+
+.deselect-btn {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.new-game-btn {
+  background-color: var(--color-success);
 }
 
 /* Modal styles */
@@ -180,7 +205,7 @@ button {
 }
 
 .modal-content {
-  background: var(--color-background);
+  background: var(--color-surface);
   padding: 2rem;
   border-radius: 8px;
   text-align: center;
@@ -213,11 +238,10 @@ button {
 }
 
 #submit-score:hover {
-  background-color: #40a953;
+  opacity: 0.9;
 }
 
-
-/* New notification styles */
+/* Notification styles */
 .game-notification {
   position: fixed;
   top: 50%;
@@ -269,7 +293,6 @@ button {
 }
 
 
-
 /* Responsive design */
 @media (max-width: 768px) {
   .game-container {
@@ -287,7 +310,7 @@ button {
   }
 
   .score-entry {
-    font-size: 0.80rem;
+    font-size: 0.8rem;
   }
 
   .main-content {
@@ -317,13 +340,13 @@ button {
     padding: 0.75rem 0.5rem;
   }
 
-  h1 {
-    font-size: 1.5rem;
+  header h1 {
+    font-size: 1.8rem;
     margin-bottom: 1rem;
   }
 
   .game-header {
     font-size: 0.9rem;
   }
-  
 }
+
