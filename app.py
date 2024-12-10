@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from src.database import init_db,get_onepiece_data,get_ALL_data
 from datetime import datetime
 
 app = Flask(__name__)
@@ -8,7 +9,26 @@ leaderboard = []
 
 @app.route('/')
 def index():
-    return render_template('index.html', leaderboard=leaderboard)
+
+    initial_data = {
+        'easy': get_onepiece_data('easy'),
+        'medium': get_onepiece_data('medium'),
+        'hard': get_onepiece_data('hard')
+    }
+    print("Intial data from route:",initial_data)
+    return render_template('index.html', leaderboard=leaderboard, initial_data=initial_data)
+
+
+@app.route('/api/onepiece-data')
+def onepiece_data():
+    difficulty = request.args.get('difficulty', 'easy')
+    try:
+        data = get_onepiece_data(difficulty)
+        print(f"Fetched data for difficulty {difficulty}:", data)
+        return jsonify(data)
+    except Exception as e:
+        print(f"Error fetching data: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/submit-score', methods=['POST'])
 def submit_score():
@@ -27,4 +47,5 @@ def submit_score():
     return jsonify({'success': True})
 
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True)
