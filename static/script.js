@@ -1,82 +1,47 @@
 // Game data for different difficulty levels
-const difficultyLevels = {
-  easy: {
-    time: 90, // 1:30 minutes
-    groups: [
-      {
-        category: "Protagonists",
-        words: ["NARUTO", "LUFFY", "GOKU", "ICHIGO"],
-        difficulty: 1
-      },
-      {
-        category: "Studios",
-        words: ["MAPPA", "BONES", "UFOTABLE", "MADHOUSE"],
-        difficulty: 2
-      },
-      {
-        category: "Genres",
-        words: ["SHOUNEN", "MECHA", "ISEKAI", "SLICE"],
-        difficulty: 3
-      },
-      {
-        category: "Anime Terms",
-        words: ["KAWAII", "SENPAI", "OTAKU", "WAIFU"],
-        difficulty: 4
-      }
-    ]
-  },
-  medium: {
-    time: 180, // 3:00 minutes
-    groups: [
-      {
-        category: "Sports Equipment",
-        words: ["RACKET", "HELMET", "GLOVES", "BOOTS"],
-        difficulty: 1
-      },
-      {
-        category: "Musical Instruments",
-        words: ["PIANO", "DRUMS", "FLUTE", "GUITAR"],
-        difficulty: 2
-      },
-      {
-        category: "Countries",
-        words: ["FRANCE", "SPAIN", "ITALY", "GREECE"],
-        difficulty: 3
-      },
-      {
-        category: "Occupations",
-        words: ["DOCTOR", "CHEF", "PILOT", "ARTIST"],
-        difficulty: 4
-      }
-    ]
-  },
-  hard: {
-    time: 480, // 8:00 minutes
-    groups: [
-      {
-        category: "Scientific Terms",
-        words: ["QUANTUM", "NUCLEUS", "PHOTON", "NEUTRON"],
-        difficulty: 1
-      },
-      {
-        category: "Philosophy",
-        words: ["ETHICS", "LOGIC", "WISDOM", "REASON"],
-        difficulty: 2
-      },
-      {
-        category: "Architecture",
-        words: ["GOTHIC", "DORIC", "MODERN", "BAROQUE"],
-        difficulty: 3
-      },
-      {
-        category: "Literature",
-        words: ["PROSE", "VERSE", "SATIRE", "SONNET"],
-        difficulty: 4
-      }
-    ]
-  }
+
+const DIFFICULTY_TIMES = {
+  easy: 90,    // 1:30 minutes, 90
+  medium: 180, // 3:00 minutes, 180
+  hard: 300    // 8:00 minutes, 300
 };
 
+// Initialize game data
+let difficultyLevels = {
+  easy: { time: DIFFICULTY_TIMES.easy, groups: [] },
+  medium: { time: DIFFICULTY_TIMES.medium, groups: [] },
+  hard: { time: DIFFICULTY_TIMES.hard, groups: [] }
+};
+
+// Load initial data
+// Function to fetch data from the server
+async function fetchOnePieceData(difficulty) {
+  try {
+    const response = await fetch(`/api/onepiece-data?difficulty=${difficulty}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching One Piece data:', error);
+    return [];
+  }
+}
+
+// Load initial data
+async function loadInitialData() {
+  for (const difficulty of ['easy', 'medium', 'hard']) {
+    const data = await fetchOnePieceData(difficulty);
+    difficultyLevels[difficulty].groups = data.map(item => ({
+      category: item.category,
+      words: item.words,
+      difficulty: difficulty === 'easy' ? 1 : difficulty === 'medium' ? 2 : 3
+    }));
+  }
+  // Start the game after data is loaded
+  game.initialize(updateUI, 'easy');
+}
 
 // Utility functions
 function shuffleArray(array) {
@@ -104,9 +69,20 @@ function showNotification(type, category = '', difficulty = '') {
   const notification = document.createElement('div');
   notification.className = `game-notification ${type} ${difficulty}`;
   
-  const icon = type === 'correct' ? '✓' : '✕';
-  const title = type === 'correct' ? 'Correct!' : 'Wrong!';
-  const message = type === 'correct' ? `Category: ${category}` : 'Try again';
+  let icon, title, message;
+  if (type === 'correct') {
+    icon = '✓';
+    title = 'Correct!';
+    message = `Category: ${category}`;
+  } else if (type === 'wrong') {
+    icon = '✕';
+    title = 'Wrong!';
+    message = 'Try again';
+  } else if (type === 'time') {
+    icon = '⏳';
+    title = 'Time\'s Up!';
+    message = 'Loading new data...';
+  }
   
   notification.innerHTML = `
     <div class="notification-content">
@@ -175,7 +151,7 @@ class Game {
     if (this.timer) {
       clearInterval(this.timer);
     }
-    
+   
     this.onUpdate = onUpdate;
     this.words = this.shuffleWords();
     this.startTimer();
@@ -245,7 +221,7 @@ class Game {
     }, 1000);
   }
 
-  endGame(won) {
+  async endGame(won) {
       clearInterval(this.timer);
       if (won) {
           const timeSpent = difficultyLevels[this.currentDifficulty].time - this.timeLeft;
@@ -282,9 +258,28 @@ class Game {
               }
           };
       } else {
-          alert('Game Over!');
+        showNotification('time', 'Time\'s Up!', this.currentDifficulty);
+        await this.loadNewData();
       }
       this.update();
+  }
+
+  async loadNewData() {
+    try {
+      const response = await fetch(`/api/new-onepiece-data?difficulty=${this.currentDifficulty}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      difficultyLevels[this.currentDifficulty].groups = data.map(item => ({
+        category: item.category,
+        words: item.words,
+        difficulty: this.currentDifficulty === 'easy' ? 1 : this.currentDifficulty === 'medium' ? 2 : 3
+      }));
+      this.initialize(this.onUpdate, this.currentDifficulty);
+    } catch (error) {
+      console.error('Error fetching new One Piece data:', error);
+    }
   }
 
   update() {
@@ -336,4 +331,7 @@ function initGame(difficulty) {
 }
 
 // Start the game when the page loads
-document.addEventListener('DOMContentLoaded', initGame);
+document.addEventListener('DOMContentLoaded', () => {
+  // Load initial data for all difficulties
+  loadInitialData();
+});

@@ -252,7 +252,6 @@ button:hover {
   padding: 1rem 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
   z-index: 1000;
 }
 
@@ -264,11 +263,19 @@ button:hover {
 .game-notification.correct {
   background-color: var(--color-success);
   color: white;
+  transition: all 0.3s ease;
 }
 
 .game-notification.wrong {
   background-color: var(--color-error);
   color: white;
+  transition: all 0.3s ease;
+}
+
+.game-notification.time {
+  background-color: var(--color-gold);
+  color: white;
+  transition: all 0.05s ease;
 }
 
 .notification-content {

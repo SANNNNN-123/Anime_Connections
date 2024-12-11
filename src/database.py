@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, ARRAY, func
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker,Session
 from sqlalchemy.exc import IntegrityError
 import os
 
@@ -89,14 +89,12 @@ def get_onepiece_data(difficulty='easy'):
     db = SessionLocal()
     try:
         if difficulty:
-            # Query for specific difficulty and get 4 random categories
             data = db.query(OnePiece)\
                 .filter(OnePiece.level == difficulty)\
                 .order_by(func.random())\
                 .limit(4)\
                 .all()
         else:
-            # Get all categories if no difficulty specified
             data = db.query(OnePiece).all()
         
         return [{"level": item.level, "category": item.category, "words": eval(item.words)} 
@@ -105,6 +103,23 @@ def get_onepiece_data(difficulty='easy'):
 
     finally:
         db.close()
+
+def get_new_onepiece_data(difficulty='easy', db: Session = None):
+    if db is None:
+        db = SessionLocal()
+    try:
+        # Query for specific difficulty and get 4 random categories
+        data = db.query(OnePiece)\
+            .filter(OnePiece.level == difficulty)\
+            .order_by(func.random())\
+            .limit(4)\
+            .all()
+        
+        return [{"level": item.level, "category": item.category, "words": eval(item.words)} 
+                for item in data]
+    finally:
+        if db:
+            db.close()
 
 
 def get_ALL_data():

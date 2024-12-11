@@ -5,3 +5,7 @@ data.json
 notes.txt
 test.ipynb
 trivia_data
+.env
+prompts.py
+Research.ipynb
+__pycache__
