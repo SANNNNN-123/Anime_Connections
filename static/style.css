@@ -90,7 +90,45 @@ header h1 {
   font-size: 2.5rem;
   color: var(--color-text);
   font-weight: bold;
+  position: relative;
+  margin-bottom: 2rem;
+  text-align: center;
 }
+
+/* Onepiece logo styling */
+.title-with-image {
+  position: relative;
+  display: inline-block;
+}
+
+.crossed-out {
+  position: relative;
+  display: inline-block;
+  opacity: 0.45;
+  z-index: 2;
+}
+
+.crossed-out::after {
+  content: '';
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  top: 50%;
+  border-bottom: 3px solid var(--color-text);
+  transform: rotate(-10deg);
+}
+
+.title-image {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  background: var(--color-secondary);
+  width: 86px;
+  height: auto;
+  z-index: 1;
+}
+
 
 .game-header {
   display: flex;
@@ -102,6 +140,93 @@ header h1 {
   border-radius: 8px;
   font-family: 'Neucha', cursive;
   border-radius: 8px;
+}
+
+/* Wave and Ship Animation */
+.wave-container {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  margin-bottom: 1px;
+  background: #3586ff;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 50%;
+  background: url('images/wave.png');
+  background-size: 200px 100%;
+}
+
+.wave.wave1 {
+  animation: wave 13s linear infinite;
+  z-index: 1000;
+  opacity: 1;
+  animation-delay: 0s;
+  bottom: 0;
+}
+
+.wave.wave2 {
+  animation: wave2 10s linear infinite;
+  z-index: 999;
+  opacity: 0.5;
+  animation-delay: -5s;
+  bottom: 5px;
+}
+
+.boat {
+  position: absolute;
+  width: 50px;  /* Adjust based on your boat image size */
+  height: 30px; /* Adjust based on your boat image size */
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1001;
+  animation: boat-sail 10s linear infinite;
+  background-image: url('https://i.postimg.cc/GmQTRnHD/boat2.png');
+  /* background-image: url('images/ship.png'); */
+
+}
+
+@keyframes boat-sail {
+  0% {
+    left: -50px; /* Start off-screen to the left */
+    transform: rotate(-5deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+  100% {
+    left: calc(100% + 50px); /* End off-screen to the right */
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes wave {
+  0% {
+    background-position-x: 0px; 
+  }
+  100% {
+    background-position-x: 1000px; 
+  }
+}
+
+@keyframes wave2 {
+  0% {
+    background-position-x: 0px; 
+  }
+  100% {
+    background-position-x: -1000px; 
+  }
 }
 
 .grid {

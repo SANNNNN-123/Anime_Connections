@@ -22,8 +22,19 @@
         </div>
         <div class="main-content">
             <header>
-                <h1>Anime Connections</h1>
+                <h1>
+                    <span class="title-with-image">
+                        <span class="crossed-out">Anime</span>
+                        <img src="{{ url_for('static', filename='images/ugly.jpg') }}" alt="Straw Hat" class="title-image">
+                    </span>
+                    Connections
+                </h1>
             </header>
+            <div class="wave-container">
+                <div class="wave wave1"></div>
+                <div class="wave wave2"></div>
+                <div class="boat"></div>
+            </div>
             <div class="game-header">
                 <div class="mistakes">Mistakes remaining: <span id="mistakes">4</span></div>
                 <div class="timer">Time: <span id="timer">4:00</span></div>
