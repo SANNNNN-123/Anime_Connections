@@ -30,13 +30,14 @@ body {
   flex-direction: column;
 }
 
-.game-container {
+.game-container{
   display: flex;
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
 }
+
 
 .leaderboard {
   background: var(--color-surface);
@@ -51,11 +52,33 @@ body {
 .leaderboard h2 {
   font-family: 'Cabin Sketch', cursive;
   text-align: left;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: var(--color-text);
   font-size: 2rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid var(--color-primary);
+}
+
+.leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 0.2rem;
+}
+
+.leaderboard-header span:nth-child(1) {
+  width: 30px;
+  text-align: center;
+}
+
+.leaderboard-header span:nth-child(2) {
+  flex: 1;
+  margin: 0 1rem;
+}
+
+.leaderboard-header span:nth-child(3) {
+  text-align: right;
 }
 
 .score-entry {
@@ -63,7 +86,37 @@ body {
   justify-content: space-between;
   padding: 0.15rem;
   background: var(--color-secondary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.score-entry .rank {
+  width: 30px;
+  text-align: center;
+}
+
+.trophy {
+  font-size: 1rem;
+}
+
+.trophy.gold {
+  color: var(--color-gold);
+}
+
+.trophy.silver {
+  color: var(--color-silver);
+}
+
+.trophy.bronze {
+  color: var(--color-bronze);
+}
+
+.score-entry .player-name {
+  flex: 1;
+  margin: 0 1rem;
+}
+
+.score-entry .player-time {
+  text-align: right;
 }
 
 .score-entry:nth-child(even) {
@@ -424,6 +477,62 @@ button:hover {
   opacity: 0.9;
 }
 
+/* Instruction */
+.how-to-play {
+  width: 720px;
+  box-sizing: border-box;
+  max-width: 700px;
+  margin: 0;
+  padding: 0.5rem;
+  background: var(--color-surface);
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 25px 25px 55px 5px / 5px 55px 25px 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Bottom-container{
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 0;
+}
+
+.how-to-play h2 {
+  font-family: 'Cabin Sketch', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.how-to-play ol {
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.how-to-play li {
+  margin-bottom: 0.5rem;
+}
+
+.how-to-play p {
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.btn-block {
+  border-radius: 255px 25px 225px 25px / 25px 225px 25px 255px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #555;
+  border-color: #555;
+}
 
 /* Responsive design */
 @media (max-width: 768px) {
@@ -437,12 +546,19 @@ button:hover {
     order: 2;
   }
 
+  .how-to-play {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    order: 3;
+  }
+
   .leaderboard h2 {
     font-size: 1.5rem;
   }
 
   .score-entry {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   .main-content {
@@ -479,6 +595,16 @@ button:hover {
 
   .game-header {
     font-size: 0.9rem;
+  }
+
+  .game-notification {
+    padding: 0.3rem 0.5rem;
+    max-width: 50%;
+  }
+
+  .game-notification i {
+    font-size: 1rem;
+    margin-right: 0.3rem;
   }
 }
 

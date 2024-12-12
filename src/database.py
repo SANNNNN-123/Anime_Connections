@@ -27,14 +27,18 @@ def init_db():
 
     # Data to be inserted
     data = [
-        {"level": "easy", "category": "Yonkou", "words": ["Shanks", "Luffy", "Buggy", "BlackBeard"]},
+        {"level": "easy", "category": "New Yonkou", "words": ["Shanks", "Luffy", "Buggy", "BlackBeard"]},
         {"level": "easy", "category": "Logia Fruit", "words": ["Enel", "Kuzan", "Sabo", "Crocodile"]},
-        {"level": "easy", "category": "Swordsmen", "words": ["Zoro", "Kuina", "Mihawk", "Killer"]},
+        {"level": "easy", "category": "Swordsmen", "words": ["Brooke", "Kuina", "Mihawk", "Killer"]},
         {"level": "easy", "category": "Marines", "words": ["Smoker", "Garp", "Sengoku", "Tashigi"]},
         {"level": "easy", "category": "Revolutionary Army", "words": ["Dragon", "Sabo", "Koala", "Kuma"]},
         {"level": "easy", "category": "Bounty Hunters", "words": ["Zeff", "Dadan", "Sentomaru", "Zoro"]},
-        {"level": "easy", "category": "Fishman", "words": ["Jinbe", "Hatchan", "Arlong", "Daruma"]},
+        {"level": "easy", "category": "Fishman", "words": ["Arlong", "Hachi", "Jinbe", "FisherTiger"]},
         {"level": "easy", "category": "Impel Down", "words": ["Magellan", "Saldeath", "Shiryu", "Ivankov"]},
+        
+        {"level": "easy", "category": "Straw Hat Pirates", "words": ["Franky", "Chopper", "Nami", "Usopp"] },
+        {"level": "easy", "category": "Worst Generation", "words": ["Bonney", "Bege", "Kid", "Law"] },
+        {"level": "easy", "category": "Admirals", "words": ["Kizaru", "Akainu", "Aokiji", "Fujitora"] },
 
         # Medium Level
         {"level": "medium", "category": "Devil Fruit Types", "words": ["Paramecia", "Zoan", "Logia", "Mythical"]},
@@ -45,6 +49,12 @@ def init_db():
         {"level": "medium", "category": "Grand Line", "words": ["Paradise", "NewWorld", "Sabaody", "Fishman"]},
         {"level": "medium", "category": "World Government", "words": ["Cipher", "Gorosei", "ImSama", "CP9"]},
         {"level": "medium", "category": "Ancient Kingdom", "words": ["Void", "Century", "DGreat", "Kingdom"]},
+        
+        {"level": "medium", "category": "Shichibukai", "words": ["Mihawk", "Kuma", "Crocodile", "Jinbe"] },
+        {"level": "medium", "category": "Members of CP9", "words": ["Lucci", "Kaku", "Blueno", "Jabura"] },
+        {"level": "medium", "category": "Dressrosa Rulers", "words": ["Doflamingo", "Riku", "Viola", "Kyros"]},
+        {"level": "medium", "category":"Wano Nine Red Scabbards", "words": ["Kinemon", "Kanjuro", "Kiku", "Raizo"] },
+
 
         # Hard Level
         {"level": "hard", "category": "Devil Fruit Science", "words": ["Lineage", "SMILE", "Awakening", "Artificial"]},

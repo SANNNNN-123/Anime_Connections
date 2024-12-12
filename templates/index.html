@@ -11,9 +11,25 @@
     <div class="game-container">
         <div class="leaderboard">
             <h2>Leaderboard</h2>
+            <div class="leaderboard-header">
+                <span>Rank</span>
+                <span>Name</span>
+                <span>Bounty</span>
+            </div>
             <div id="leaderboard-list">
                 {% for score in leaderboard %}
                 <div class="score-entry">
+                    <span class="rank">
+                        {% if loop.index == 1 %}
+                            <span class="trophy gold">🏆</span>
+                        {% elif loop.index == 2 %}
+                            <span class="trophy silver">🥈</span>
+                        {% elif loop.index == 3 %}
+                            <span class="trophy bronze">🥉</span>
+                        {% else %}
+                            {{ loop.index }}
+                        {% endif %}
+                    </span>
                     <span class="player-name">{{ score.name }}</span>
                     <span class="player-time">{{ score.time }}</span>
                 </div>
@@ -50,6 +66,19 @@
                 <button id="medium-game" class="difficulty-btn medium">Medium</button>
                 <button id="hard-game" class="difficulty-btn hard">Hard</button>
             </div>
+        </div>
+    </div>
+    
+    <div class="Bottom-container">
+        <div class="how-to-play">
+            <button type="buttonCard" class="btn-secondary btn-block"> How To Play? </button>
+            <ol>
+                <li>Find groups of four related words.</li>
+                <li>Click on words to select them.</li>
+                <li>Click 'Submit' when you've selected four words.</li>
+                <li>Solve all four groups to win!</li>
+            </ol>
+            <p>Be careful! You only have 4 mistakes allowed.</p>
         </div>
     </div>
 
