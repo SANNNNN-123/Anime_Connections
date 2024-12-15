@@ -1,0 +1,31 @@
+[
+  {
+    "level": "medium",
+    "categories": {
+      "Swordsmen": [
+        "Mihawk",
+        "Zoro",
+        "Ryuma",
+        "Brook"
+      ],
+      "Revolutionaries": [
+        "Dragon",
+        "Sabo",
+        "Ivankov",
+        "Kuma"
+      ],
+      "Fishmen": [
+        "Jinbe",
+        "Hody",
+        "Arlong",
+        "Jack"
+      ],
+      "Royalties": [
+        "Vivi",
+        "Cobra",
+        "Mjosgard",
+        "Nefertari"
+      ]
+    }
+  }
+]

@@ -31,7 +31,7 @@
   },
   {
     "level": "easy",
-    "category": "Previous Four Emperors",
+    "category": "Four Emperors",
     "words": [
       "Shanks",
       "Big Mom",
@@ -95,7 +95,7 @@
     "words": [
       "Lucky Roux",
       "Benn Beckman",
-      "Shanks",
+      "Limejuice",
       "Yasopp"
     ]
   },
@@ -185,7 +185,7 @@
     "words": [
       "Kid",
       "Hawkins",
-      "Law",
+      "Bonney",
       "Apoo"
     ]
   },
@@ -315,7 +315,7 @@
     "words": [
       "Marigold",
       "Sandersonia",
-      "Hancock",
+      "Marguerite",
       "Sweet Pea"
     ]
   },
@@ -421,52 +421,12 @@
   },
   {
     "level": "easy",
-    "category": "Drum Kingdom Royal Family",
-    "words": [
-      "Wapol",
-      "Dalton",
-      "Kureha",
-      "Chess"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "Mugiwaras Allies",
-    "words": [
-      "Vivi",
-      "Bon Clay",
-      "Koza",
-      "Rebecca"
-    ]
-  },
-  {
-    "level": "easy",
     "category": "Sun Pirates",
     "words": [
       "Fisher Tiger",
       "Aladdin",
       "Arlong",
       "Jinbe"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "Gora Pirates",
-    "words": [
-      "Captain Gora",
-      "Gora's First Mate",
-      "Gora's Second Mate",
-      "Gora's Third Mate"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "Shiki Pirates",
-    "words": [
-      "Shiki",
-      "Indig",
-      "Dr. Indigo",
-      "Scarlet"
     ]
   },
   {
@@ -503,8 +463,8 @@
     "level": "easy",
     "category": "Wano Daimyo",
     "words": [
-      "Kozuki Oden",
-      "Shimotsuki Yasuie",
+      "Oden",
+      "Yasuie",
       "Uzumasa",
       "Hakumai"
     ]
@@ -567,16 +527,6 @@
       "Kanjuro",
       "Raizo",
       "Kiku"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "Straw Hats' Musicians",
-    "words": [
-      "Brook",
-      "Apoo",
-      "Scratchmen Apoo",
-      "Urouge"
     ]
   },
   {
@@ -646,17 +596,7 @@
       "Caesar",
       "Enel",
       "Kuzan",
-      "Smoker"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "Paramecia Devil Fruit Users",
-    "words": [
-      "Luffy",
-      "Buggy",
-      "Law",
-      "Katakuri"
+      "Ace"
     ]
   },
   {
@@ -667,16 +607,6 @@
       "Marco",
       "Pekoms",
       "Tamago"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "Swordsman From Wano",
-    "words": [
-      "Zoro",
-      "Kin'emon",
-      "Denjiro",
-      "Kawamatsu"
     ]
   },
   {
@@ -731,22 +661,12 @@
   },
   {
     "level": "easy",
-    "category": "People from Alabasta",
+    "category": "Drum Kingdom Residents",
     "words": [
-      "Vivi",
-      "Cobra",
-      "Igaram",
-      "Chaka"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "People from Drum Island",
-    "words": [
-      "Wapol",
-      "Dalton",
+      "Hiluluk",
       "Kureha",
-      "Chess"
+      "Dalton",
+      "Wapol"
     ]
   },
   {
@@ -761,32 +681,12 @@
   },
   {
     "level": "easy",
-    "category": "People from Amazon Lily",
-    "words": [
-      "Hancock",
-      "Nyon",
-      "Marigold",
-      "Sandersonia"
-    ]
-  },
-  {
-    "level": "easy",
     "category": "People from Dressrosa",
     "words": [
       "Rebecca",
       "Riku Dold III",
       "Viola",
       "Kyros"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "People from Whole Cake Island",
-    "words": [
-      "Big Mom",
-      "Katakuri",
-      "Pudding",
-      "Cracker"
     ]
   },
   {
@@ -801,36 +701,6 @@
   },
   {
     "level": "easy",
-    "category": "People from Goa Kingdom",
-    "words": [
-      "Sabo",
-      "Stelly",
-      "Dragon",
-      "Dadan"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "People from the North Blue",
-    "words": [
-      "Law",
-      "Doflamingo",
-      "Judge Vinsmoke",
-      "Killer"
-    ]
-  },
-  {
-    "level": "easy",
-    "category": "People from the New World",
-    "words": [
-      "Shanks",
-      "Kaido",
-      "Big Mom",
-      "Blackbeard"
-    ]
-  },
-  {
-    "level": "easy",
     "category": "Luffy's Allies in Wano",
     "words": [
       "Momo",
@@ -841,12 +711,12 @@
   },
   {
     "level": "easy",
-    "category": "Haki Users",
+    "category": "Germa 66",
     "words": [
-      "Luffy",
-      "Zoro",
-      "Sanji",
-      "Katakuri"
+      "Judge",
+      "Ichiji",
+      "Niji",
+      "Yonji"
     ]
   }
 ]

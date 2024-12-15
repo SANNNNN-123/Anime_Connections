@@ -38,7 +38,7 @@ def init_db():
         
         {"level": "easy", "category": "Straw Hat Pirates", "words": ["Franky", "Chopper", "Nami", "Usopp"] },
         {"level": "easy", "category": "Worst Generation", "words": ["Bonney", "Bege", "Kid", "Law"] },
-        {"level": "easy", "category": "Admirals", "words": ["Kizaru", "Akainu", "Aokiji", "Fujitora"] },
+        {"level": "easy", "category": "Admirals", "words": ["Kizaru", "Akainu", "Ryokugyu", "Fujitora"] },
 
         # Medium Level
         {"level": "medium", "category": "Devil Fruit Types", "words": ["Paramecia", "Zoan", "Logia", "Mythical"]},
@@ -50,7 +50,7 @@ def init_db():
         {"level": "medium", "category": "World Government", "words": ["Cipher", "Gorosei", "ImSama", "CP9"]},
         {"level": "medium", "category": "Ancient Kingdom", "words": ["Void", "Century", "DGreat", "Kingdom"]},
         
-        {"level": "medium", "category": "Shichibukai", "words": ["Mihawk", "Kuma", "Crocodile", "Jinbe"] },
+        {"level": "medium", "category": "Ex-Shichibukai", "words": ["Mihawk", "Kuma", "Crocodile", "Jinbe"] },
         {"level": "medium", "category": "Members of CP9", "words": ["Lucci", "Kaku", "Blueno", "Jabura"] },
         {"level": "medium", "category": "Dressrosa Rulers", "words": ["Doflamingo", "Riku", "Viola", "Kyros"]},
         {"level": "medium", "category":"Wano Nine Red Scabbards", "words": ["Kinemon", "Kanjuro", "Kiku", "Raizo"] },
