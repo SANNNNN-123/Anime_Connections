@@ -5,6 +5,6 @@ data.json
 notes.txt
 trivia_data
 .env
-prompts.py
 Research.ipynb
 __pycache__
+puzzles
