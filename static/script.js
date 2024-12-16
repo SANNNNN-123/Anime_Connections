@@ -16,6 +16,7 @@ let difficultyLevels = {
 // Load initial data
 // Function to fetch data from the server
 async function fetchOnePieceData(difficulty) {
+  showLoading();
   try {
     const response = await fetch(`/api/onepiece-data?difficulty=${difficulty}`);
     if (!response.ok) {
@@ -26,11 +27,36 @@ async function fetchOnePieceData(difficulty) {
   } catch (error) {
     console.error('Error fetching One Piece data:', error);
     return [];
+  } finally {
+    hideLoading(); 
   }
 }
 
+//loading animation
+function showLoading() {
+  const loadingElement = document.querySelector('.loading-container');
+  if (!loadingElement) {
+    const loading = document.createElement('div');
+    loading.className = 'loading-container';
+    loading.innerHTML = `
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading...</div>
+    `;
+    document.body.appendChild(loading);
+  }
+}
+
+function hideLoading() {
+  const loadingElement = document.querySelector('.loading-container');
+  if (loadingElement) {
+    loadingElement.remove();
+  }
+}
+
+
 // Load initial data
 async function loadInitialData() {
+  showLoading();
   for (const difficulty of ['easy', 'medium', 'hard']) {
     const data = await fetchOnePieceData(difficulty);
     difficultyLevels[difficulty].groups = data.map(item => ({
@@ -39,6 +65,7 @@ async function loadInitialData() {
       difficulty: difficulty === 'easy' ? 1 : difficulty === 'medium' ? 2 : 3
     }));
   }
+  hideLoading();
   // Start the game after data is loaded
   game.initialize(updateUI, 'easy');
 }
@@ -135,6 +162,9 @@ class Game {
                 || 'easy';
     }
 
+    showLoading();
+    this.update();
+
     // Rest of your initialization method
     if (!difficultyLevels[difficulty]) {
       console.error(`Invalid difficulty level: ${difficulty}`);
@@ -155,6 +185,7 @@ class Game {
     this.onUpdate = onUpdate;
     this.words = this.shuffleWords();
     this.startTimer();
+    hideLoading();
     this.update();
   }
 
@@ -222,49 +253,51 @@ class Game {
   }
 
   async endGame(won) {
-      clearInterval(this.timer);
-      if (won) {
-          const timeSpent = difficultyLevels[this.currentDifficulty].time - this.timeLeft;
+    clearInterval(this.timer);
+    if (won) {
+      const timeSpent = difficultyLevels[this.currentDifficulty].time - this.timeLeft;
           
-          const modal = document.getElementById('score-modal');
-          const finalTime = document.getElementById('final-time');
-          finalTime.textContent = formatTime(timeSpent);
-          modal.style.display = 'flex';
+      const modal = document.getElementById('score-modal');
+      const finalTime = document.getElementById('final-time');
+      finalTime.textContent = formatTime(timeSpent);
+      modal.style.display = 'flex';
           
-          // Handle score submission
-          const submitButton = document.getElementById('submit-score');
-          submitButton.onclick = async () => {
-              const playerName = document.getElementById('player-name').value;
-              if (!playerName) return;
+      // Handle score submission
+      const submitButton = document.getElementById('submit-score');
+      submitButton.onclick = async () => {
+          const playerName = document.getElementById('player-name').value;
+          if (!playerName) return;
               
-              try {
-                  const response = await fetch('/submit-score', {
-                      method: 'POST',
-                      headers: {
-                          'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                          name: playerName,
-                          time: formatTime(timeSpent)
-                      })
-                  });
+          try {
+              const response = await fetch('/submit-score', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      name: playerName,
+                      time: formatTime(timeSpent)
+                  })
+              });
                   
-                  if (response.ok) {
-                      // Refresh the page to update leaderboard
-                      window.location.reload();
-                  }
-              } catch (error) {
-                  console.error('Error submitting score:', error);
+              if (response.ok) {
+                  // Refresh the page to update leaderboard
+                  window.location.reload();
               }
-          };
-      } else {
-        showNotification('time', 'Time\'s Up!', this.currentDifficulty);
-        await this.loadNewData();
-      }
-      this.update();
+          } catch (error) {
+              console.error('Error submitting score:', error);
+          }
+      };
+    } else {
+      hideLoading();
+      showNotification('time', 'Time\'s Up!', this.currentDifficulty);
+      await this.loadNewData();
+    }
+    this.update();
   }
 
   async loadNewData() {
+    showLoading();
     try {
       const response = await fetch(`/api/new-onepiece-data?difficulty=${this.currentDifficulty}`);
       if (!response.ok) {
@@ -279,6 +312,8 @@ class Game {
       this.initialize(this.onUpdate, this.currentDifficulty);
     } catch (error) {
       console.error('Error fetching new One Piece data:', error);
+    } finally {
+      hideLoading();
     }
   }
 

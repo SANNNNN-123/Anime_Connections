@@ -285,7 +285,7 @@ header h1 {
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
+  gap: 0.25rem;
   margin-bottom: 1rem;
 }
 
@@ -293,13 +293,19 @@ header h1 {
   font-family: 'Neucha', cursive;
   background-color: #f0f0f0;
   color: #333;
-  padding: 1rem;
+  padding: 0.5rem;
+  min-height: 2.5rem;
   border: 2px solid #d3d3d3;
   border-radius: 8px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: bold;
+
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
 }
 
@@ -357,15 +363,20 @@ button:hover {
 
 .submit-btn {
   background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .deselect-btn {
   background-color: var(--color-secondary);
   color: var(--color-text);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .new-game-btn {
   background-color: var(--color-success);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Modal styles */
@@ -476,6 +487,48 @@ button:hover {
   font-size: 0.9rem;
   opacity: 0.9;
 }
+
+/* Loading animation */
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 1002;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--color-secondary);
+  border-top: 5px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-text {
+  font-family: 'Cabin Sketch', cursive;
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hide the boat when loading */
+.loading-container + .wave-container .boat {
+  display: none;
+}
+
 
 /* Instruction */
 .how-to-play {

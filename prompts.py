@@ -64,3 +64,68 @@ Analysis:
   }
 ]
 '''
+
+
+medium_test_puzzle_prompt = '''
+You are an expert in generating Connection puzzles, especially within the world of One Piece.
+Your task is to create a medium difficulty puzzle with 4 categories, following the below guidlines:
+
+- Step 1: Generate 4 categories. Use 1-2 word concise names that represents the category
+- Step 2: List of at least 4 characters associated with that category. If that list is below 4 generate other category.
+- Step 3: Find characters that overlap. Atleast use overlapping 2 category members per 4 group.
+- Step 4: Assign overlapping characters randomly, based on what category best represents that member's key association. Not each category should use unique member from other group category member as overlap if one category can overlap with another
+- Step 5: Fill the remaining slots to at least a list of four members with suitable
+- Ensure no characters repeats. The entire puzzle set should have 16 unique names.
+
+While also taking into account that a member is likely belongs to more than one group and overlapping as possible by being creative
+Please explore different combination of categories
+
+
+**Example Output:**
+Step1 = [ Category1,Category2,Category3,Category4 ]
+
+Step2 = [
+            {
+                "Category1" : ["Character", "Character", "Character","Character",...],
+                "Category2" : ["Character", "Character", "Character","Character",...],
+                "Category3" : ["Character", "Character", "Character","Character",...],
+                "Category4" : ["Character", "Character", "Character","Character",...]
+            }
+        ]
+
+Step3 = [
+            Character1 in Category2,Category4,
+            Character2 in Category3,Category4,
+            Character3 in Category3,Category4,
+            Character4 in Category3,Category4,
+            Character5 in Category3,Category1
+        ]
+
+Step4 = [
+            {
+                "level": "medium",
+                "categories" :
+                    {
+                        "Category1" : ["", "", "",""],
+                        "Category2" : ["Character5", "Character3", "",""],
+                        "Category3" : ["", "Character4", "",""],
+                        "Category4" : ["Character2", "", "","Character1"]
+                    }
+            }
+        ]
+
+```json
+[
+   {
+    "level": "medium",
+    "categories" :
+        {
+            "Category1" : ["Character6", "Character13", "Character6","Character10"],
+            "Category2" : ["Character5", "Character3", "Character7","Character8"],
+            "Category3" : ["Character9", "Character4", "Character11","Character12"],
+            "Category4" : ["Character2", "Character14", "Character15","Character1"]
+        }
+  }
+]
+
+'''

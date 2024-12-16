@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from src.database import init_db,get_onepiece_data,get_new_onepiece_data
+from src.database import init_db,get_onepiece_data,get_new_onepiece_data,insert_data_from_json
 from datetime import datetime
 
 app = Flask(__name__)
@@ -50,5 +50,6 @@ def submit_score():
     return jsonify({'success': True})
 
 if __name__ == '__main__':
-    init_db()
+    #init_db()
+    #insert_data_from_json("puzzles/easy_puzzles_20241215_045446.json")
     app.run(debug=True)
